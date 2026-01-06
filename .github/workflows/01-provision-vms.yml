@@ -39,7 +39,7 @@ jobs:
         TERRAFORM_VERSION=1.14.3
         curl -fsSL \
         https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.tar.gz
-        unzip terraform.tar.gz
+        unzip -o terraform.tar.gz
         sudo mv terraform /usr/local/bin/
         terraform version
 
