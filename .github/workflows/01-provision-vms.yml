@@ -40,7 +40,7 @@ jobs:
         curl -fsSL \
         https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.tar.gz
         unzip terraform.tar.gz -d /tmp
-        sudo mv -d /tmp/terraform /usr/local/bin/
+        sudo mv /tmp/terraform /usr/local/bin/
         terraform version
 
     - name: Terraform Init
