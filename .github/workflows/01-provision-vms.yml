@@ -27,6 +27,11 @@ jobs:
         HASH=$(openssl passwd -6 "${{ secrets.VM_USER_PASSWORD }}")
         echo "hash=$HASH" >> $GITHUB_OUTPUT
 
+    - name: Who am I
+      run: |
+        whoami
+        id
+
     - name: Install Terraform (no apt)
       run: |
         set -eux
