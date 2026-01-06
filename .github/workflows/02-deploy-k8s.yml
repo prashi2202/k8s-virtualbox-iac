@@ -1,0 +1,33 @@
+name: 02 - Deploy Kubernetes Cluster
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-k8s:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Kubernetes binaries
+      run: |
+        chmod +x scripts/*.sh
+        sudo bash scripts/install-k8s.sh
+
+    - name: Initialize Kubernetes Control Plane
+      run: |
+        sudo bash scripts/init-master.sh
+
+    - name: Join Worker Nodes
+      run: |
+        sudo bash scripts/join-workers.sh
+
+    - name: Install Ingress Controller
+      run: |
+        sudo bash scripts/install-ingress.sh
+
+    - name: Cluster Health Check
+      run: |
+        sudo bash scripts/health-check.sh

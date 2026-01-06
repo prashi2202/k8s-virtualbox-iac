@@ -1,0 +1,43 @@
+name: 01 - Provision VirtualBox VMs
+
+on:
+  workflow_dispatch:
+    inputs:
+      master_count:
+        description: "Number of master nodes"
+        required: true
+        default: "1"
+      worker_count:
+        description: "Number of worker nodes"
+        required: true
+        default: "2"
+
+jobs:
+  provision:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Generate VM password hash
+      id: password
+      shell: bash
+      run: |
+        HASH=$(openssl passwd -6 "${{ secrets.VM_USER_PASSWORD }}")
+        echo "hash=$HASH" >> $GITHUB_OUTPUT
+
+    - name: Terraform Init
+      working-directory: terraform
+      run: terraform init
+
+    - name: Terraform Apply (VM Provisioning Only)
+      working-directory: terraform
+      run: |
+        terraform apply -auto-approve \
+          -var="master_count=${{ github.event.inputs.master_count }}" \
+          -var="worker_count=${{ github.event.inputs.worker_count }}" \
+          -var="iso_path=${{ secrets.UBUNTU_ISO_PATH }}" \
+          -var="bridge_interface=${{ secrets.BRIDGE_INTERFACE }}" \
+          -var="ssh_public_key=${{ secrets.SSH_PUBLIC_KEY }}" \
+          -var="vm_password_hash=${{ steps.password.outputs.hash }}"
