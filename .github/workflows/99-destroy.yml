@@ -1,0 +1,16 @@
+name: 99 - Destroy VirtualBox Environment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  destroy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Terraform Destroy
+      working-directory: terraform
+      run: terraform destroy -auto-approve
