@@ -30,11 +30,11 @@ jobs:
     - name: Install Terraform (no apt)
       run: |
         set -eux
-        TERRAFORM_VERSION=1.6.6
+        apt-get install unzip
+        TERRAFORM_VERSION=1.14.3
         curl -fsSL \
-        https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.tar.gz \
-        -o terraform.tar.gz
-        tar -xzf terraform.tar.gz
+        https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.tar.gz
+        unzip terraform.tar.gz
         sudo mv terraform /usr/local/bin/
         terraform version
 
