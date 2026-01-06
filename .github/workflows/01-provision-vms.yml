@@ -27,15 +27,15 @@ jobs:
         HASH=$(openssl passwd -6 "${{ secrets.VM_USER_PASSWORD }}")
         echo "hash=$HASH" >> $GITHUB_OUTPUT
 
-    - name: Install Terraform
+    - name: Install Terraform (no apt)
       run: |
-        sudo apt-get update
-        sudo apt-get install -y wget unzip
+        set -eux
         TERRAFORM_VERSION=1.6.6
-        wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-        unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+        curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip
+        unzip terraform.zip
         sudo mv terraform /usr/local/bin/
         terraform version
+
 
 
     - name: Terraform Init
