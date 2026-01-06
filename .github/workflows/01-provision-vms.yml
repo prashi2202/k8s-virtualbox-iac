@@ -33,8 +33,6 @@ jobs:
         sudo pkill -f apt || true
         sudo rm -f /var/lib/dpkg/lock-frontend
         sudo rm -f /var/lib/dpkg/lock
-
-      # Install unzip
         sudo apt-get update -o Acquire::Retries=3 -o Acquire::http::Timeout=30
         sudo apt-get install -y unzip curl
         TERRAFORM_VERSION=1.14.3
