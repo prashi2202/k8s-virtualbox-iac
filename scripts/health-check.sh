@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "[INFO] Cluster health check"
+echo "[INFO] Cluster health check is being performed"
 
 kubectl get nodes
 kubectl get pods -A
